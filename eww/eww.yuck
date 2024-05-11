@@ -1,0 +1,148 @@
+(include "variables.yuck")
+(include "windows.yuck")
+
+(include "yuck/control_center.yuck")
+(include "yuck/quick_settings.yuck")
+(include "yuck/volume.yuck")
+(include "yuck/music.yuck")
+
+(include "yuck/day.yuck")
+(include "yuck/clock.yuck")
+(include "yuck/weather.yuck")
+(include "yuck/dock.yuck")
+(include "yuck/bg_widgets.yuck")
+
+(defpoll CPU_USAGE :interval "1s" `~/.config/eww/scripts/sys_info --cpu`)
+(defpoll MEM_USAGE :interval "1s" `~/.config/eww/scripts/sys_info --mem`)
+(defpoll BLIGHT :interval "1s" `~/.config/eww/scripts/sys_info --blight`)
+(defpoll BATTERY :interval "5s" `~/.config/eww/scripts/sys_info --bat`)
+
+(defwindow bar
+    :monitor 0
+    :geometry (geometry :x "0%"
+                        :y "5px"
+                        :width "90%"
+                        :height "30px"
+                        :anchor "center top")
+    :stacking "bg"
+    :exclusive true
+    :windowtype "dock"
+    (bar))
+
+        (defpoll user :interval "1s"
+        :initial "initial-value"  ; optional, defaults to poll at startup
+`whoami`)
+
+(defpoll desktop :interval "1s"
+    :initial "initial-value"  ; optional, defaults to poll at startup
+    `bun ~/.config/eww/scripts/workspace.js`
+)
+
+(
+    defwidget bar []
+    (centerbox
+        :class "bar"
+        (left)
+        (clock)
+        (updates)
+        )
+)
+
+(
+    defwidget left []
+    (box
+        :class "left"
+        :spacing 0
+        :space-evenly false
+        (box
+            (user)
+            
+            (Volume)
+    )
+    )
+)
+
+(
+    defwidget user []
+    (box 
+        :class "user"
+        :space-evenly false
+        :spacing 5
+        (button :onclick `~/.config/eww/scripts/toggle_control_center.sh`
+        (label :text ""
+        :css "label{color: #34EB7D; font-size:  30px;}")
+    )
+        (label :class "userlabel" :text `${user}`)
+        ;desktops
+        (literal :content desktop)
+    )
+)
+
+(
+    defpoll Vol :interval "200ms"
+    :initial "?%"  ; optional, defaults to poll at startup
+    `awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)`
+)
+(
+    defwidget Volume []
+    (eventbox
+        :class "volume"
+        :onscroll `~/.config/eww/scripts/volum.sh {}`
+    (label :text `   ${Vol}`)
+    )
+)
+
+(
+    defpoll time :interval "1s"
+    :initial "initial-value"  ; optional, defaults to poll at startup
+    `date +%H:%M:%S`
+)
+
+(
+    defwidget clock []
+    (label :text time
+        :width 100
+        :class "center")
+)
+
+(
+    defpoll CountUpdates :interval "15s"
+    :initial "Comprobando actualizaciones"
+    `~/.config/eww/scripts/updates.sh`
+)
+
+(
+defwidget updates []
+   	(box
+    :space-evenly false
+    :spacing 200
+	(button 
+        :onclick `~/.config/eww/scripts/upgrade.sh`
+        (label :text `${CountUpdates}`
+            :class "updates"
+            :justify "left")
+    	)
+    (system)
+	)
+)
+
+(
+defwidget system [] 
+	(box :class "system" :vexpand "false" :hexpand "false" 
+		(box :orientation "h" :spacing 35 :halign "center" :valign "center" :space-evenly "false" :vexpand "false" :hexpand "false" 
+			(box :class "cpu_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconcpu" :text "")
+				(scale :min 0 :max 100 :value CPU_USAGE :active "false"))
+			(box :class "mem_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconmem" :text "󰰐")
+				(scale :min 0 :max 100 :value MEM_USAGE :active "false"))
+			(box :class "bright_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconbright" :text "󰃟")
+				(scale :min 0 :max 100 :value BLIGHT :active "false"))
+			(box :class "bat_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "iconbat" :text "")
+				(scale :min 0 :max 100 :value BATTERY :active "false")
+)
+)
+)
+)
