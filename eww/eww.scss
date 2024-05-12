@@ -1,0 +1,136 @@
+* {
+    all: unset;
+    font-family: FiraCode;
+}
+
+@import "scss/control_center.scss";
+@import "scss/quick_settings.scss";
+@import "scss/volume.scss";
+@import "scss/music.scss";
+
+
+@import "scss/day.scss";
+@import "scss/clock.scss";
+@import "scss/dock.scss";
+@import "scss/weather.scss";
+@import "scss/control_center_icon.scss";
+
+
+//set all the background to transparent
+
+window {
+  background: rgba($color: #000000, $alpha: 0);
+  color: white;
+}
+
+.userlabel{
+    margin-left: 20px;
+}
+
+.user{
+    background: rgba($color: #082d6c, $alpha: 0.5);
+    margin-right: 40px;
+    border-radius: 20px 5px 20px 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.center{
+    background: rgba($color: #286076, $alpha: 0.5);
+    margin-left: 60px;
+    min-width: 70px;
+    border-radius: 20px 5px 20px 5px;
+}
+
+.left button{
+    color: white;
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    min-width: 30px;
+    min-height: 15px;
+}
+
+.workspaces{
+    margin-left: 10px;
+    background: rgba($color: #4774BF, $alpha: 0.8);
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.volume{
+    background: rgba($color: #405253, $alpha: 0.5);
+    margin-left: 60px;
+    border-radius: 20px 5px 20px 5px;
+}
+
+.updates{
+    background: rgba($color: #5D2A7C, $alpha: 0.5);
+    min-width: 70px;
+    margin-left: 60px;
+    border-radius: 20px 5px 20px 5px;
+}
+
+.system{
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba($color: #062E44, $alpha: 0.5);
+    border-radius: 20px 5px 20px 5px;
+}
+
+.controllcenter
+{
+    padding-right: 15px;
+    padding-left: 10px;
+    background: rgba($color: #C13224, $alpha: 0.9);
+    border-radius: 20px 5px 20px 5px;
+}
+
+.iconcpu, .iconmem, .iconbright, .iconbat {
+	font-size : 32px;
+	font-weight : normal;
+}
+.iconcpu {
+	color: #BF616A;
+}
+.iconmem {
+	color: #A3BE8C;
+}
+.iconbright {
+	color: #EBCB8B;
+}
+.iconbat {
+	color: #88C0D0;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough {
+	all: unset;
+	background-color: #3A404C;
+	border-radius: 16px;
+	min-height: 10px;
+	min-width: 60px;
+}
+
+.cpu_bar, .mem_bar, .bright_bar, .bat_bar, scale trough highlight {
+	all: unset;
+	border-radius: 16px;
+}
+
+.cpu_bar scale trough highlight {
+	background-color: #BF616A;
+}
+.mem_bar scale trough highlight {
+	background-color: #A3BE8C;
+}
+.bright_bar scale trough highlight {
+	background-color: #EBCB8B;
+}
+.bat_bar scale trough highlight {
+	background-color: #88C0D0;
+}
+
+.active {
+    font-weight: bold;
+    color: #EBCB8B;
+}

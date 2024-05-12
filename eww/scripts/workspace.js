@@ -19,9 +19,18 @@ exec('hyprctl workspaces -j', (err, stdout, stderr) => {
         }
     });
     // crear un panel de selección
-    let Buttons = items.map(item => {
-        return `(button :onclick "hyprctl dispatch workspace ${item.label}"
-        (label :text "${item.label}"))`})
-    console.log(`(box :class "workspaces" ${Buttons.join(' ')})`);
+    let Buttons = []
+    exec('hyprctl activeworkspace -j', (err, stdout, stderr) => {
+        let result = JSON.parse(stdout);
+        Buttons = items.map(item => {
+            if (item)
+            {
+                return `(button :onclick "hyprctl dispatch workspace ${item.label}"
+            (label :class "${ result.name === item.label ? 'active' : '' }" :text "${item.label}"))`}
+        }
+        )
+
+        console.log(`(box :class "workspaces" ${Buttons.join(' ')})`);
+    });
     console.error(stderr);
 })

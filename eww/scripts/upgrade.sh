@@ -1,0 +1,1 @@
+kitty sudo dnf upgrade

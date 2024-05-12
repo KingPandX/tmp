@@ -1,0 +1,11 @@
+
+(defpoll news 
+    :interval "5m"
+    :initial '/////'
+    `bun ~/.config/eww/scripts/newmanager.js`
+)
+
+(
+    defwidget news []
+    (literal :content news)
+)
